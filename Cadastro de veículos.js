@@ -1,100 +1,113 @@
 const readline = require("readline-sync");
 const clear = require("clear");
 
-let gerador_veiculo = 2;
-
-const veiculo1 = {
-  Tipo: "Carro",
-  Modelo: "citroen c4",
-  Cor: ["Prata", "Vermelho", "Preto"],
-  preco: 35000,
-};
-
-const veiculo2 = {
-  Tipo: "Moto",
-  Modelo: "Yamaha Fluo",
-  Cor: ["Branco", "Vermelho", "Azul Escuro"],
-  preco: 25000,
-};
+class Veiculo {
+  constructor(tipo, modelo, ano, cores, preco) {
+    this.tipo = tipo;
+    this.modelo = modelo;
+    this.ano = ano;
+    this.cores = cores;
+    this.preco = preco;
+  }
+  get tipo() {
+    return this._tipo;
+  }
+  set tipo(novoTipo) {
+    this._tipo = novoTipo;
+  }
+  get modelo() {
+    return this._modelo;
+  }
+  set modelo(novoModelo) {
+    this._modelo = novoModelo;
+  }
+  get ano() {
+    return this._ano;
+  }
+  set ano(novoAno) {
+    this._ano = novoAno;
+  }
+  get cores() {
+    return this._cores;
+  }
+  set cores(novasCores) {
+    this._cores = novasCores;
+  }
+  get preco() {
+    return this._preco;
+  }
+  set preco(novoPreco) {
+    this._preco = novoPreco;
+  }
+  exibir() {
+    console.log("------------------------");
+    console.log(`Tipo: ${this.tipo}`);
+    console.log(`Modelo: ${this.modelo}`);
+    console.log(`Ano: ${this.ano}`);
+    console.log(`Cores: ${this.cores.join(", ")}`);
+    console.log(`Preço: R$ ${this.preco.toFixed(2)}`);
+    console.log("------------------------");
+  }
+}
+const veiculo1 = new Veiculo("Carro", "citroen c4", 2021, ["Prata", "Vermelho", "Preto"], 35000);
+const veiculo2 = new Veiculo("Moto", "Yamaha Fluo", 2019, ["Branco", "Vermelho", "Azul Escuro"], 25000);
 
 const veiculos = [veiculo1, veiculo2];
 let loop = true;
 
 function listarVeiculos() {
-  console.log("Listando todos os veiculos");
+  console.log("Listando todos os veículos");
   console.log("------------------------");
   for (const veiculo of veiculos) {
-    console.log(`Tipo: ${veiculo.Tipo}`);
-    console.log(`Modelo: ${veiculo.Modelo}`);
-    console.log(`Cores: ${veiculo.Cor.join(", ")}`);
-    console.log(`Preço: R$ ${veiculo.preco.toFixed(2)}`);
-    console.log("------------------------");
+    veiculo.exibir();
   }
 }
-
-function cadastrarNovoVeiculo() {
-  console.log("Cadastrar um novo veiculo");
-  console.log("------------------------");
-
-  let tipo = readline.question("Tipo do veiculo: ");
-  let modelo = readline.question("Modelo do veiculo: ");
-  let cores = readline.question("Cores disponiveis (separadas por virgula): ").split(",");
-  let preco = readline.questionFloat("Preco do veiculo: ");
-
-  const novoVeiculo = {
-    Tipo: tipo,
-    Modelo: modelo,
-    Cor: cores,
-    preco: preco,
-  };
-
-  veiculos.push(novoVeiculo);
-
-  console.log(`Veiculo "${modelo}" cadastrado com sucesso!`);
-}
-
-function buscarVeiculoPorModelo() {
+function buscarVeiculoPorTipoModeloAno() {
+  let tipoBusca = readline.question("Qual o tipo do veículo que deseja buscar: ");
   let modeloBusca = readline.question("Qual o modelo do veículo que deseja buscar: ");
-  let encontrados = [];
+  let anoBusca = readline.questionInt("Qual o ano do veículo que deseja buscar: ");
 
-  for (const veiculo of veiculos) {
-    if (veiculo.Modelo.toLowerCase() === modeloBusca.toLowerCase()) {
-      encontrados.push(veiculo);
-    }
-  }
-
+  let encontrados = veiculos.filter(veiculo => 
+    veiculo.tipo.toLowerCase() === tipoBusca.toLowerCase() && 
+    veiculo.modelo.toLowerCase() === modeloBusca.toLowerCase() &&
+    veiculo.ano === anoBusca
+  );
   if (encontrados.length > 0) {
     console.log("Resultado da busca");
     console.log("------------------------");
     for (const veiculo of encontrados) {
-      exibirVeiculo(veiculo);
+      veiculo.exibir();
     }
   } else {
-    console.log(`Nenhum veículo encontrado com o modelo "${modeloBusca}"`);
+    console.log(`Nenhum veículo encontrado com o tipo "${tipoBusca}", modelo "${modeloBusca}" e ano "${anoBusca}"`);
   }
 }
+function cadastrarNovoVeiculo() {
+  console.log("Cadastrar um novo veículo");
+  console.log("------------------------");
 
-function exibirVeiculo(veiculo) {
-  console.log("------------------------");
-  console.log(`Tipo: ${veiculo.Tipo}`);
-  console.log(`Modelo: ${veiculo.Modelo}`);
-  console.log(`Cores: ${veiculo.Cor.join(", ")}`);
-  console.log(`Preço: R$ ${veiculo.preco.toFixed(2)}`);
-  console.log("------------------------");
+  let tipo = readline.question("Tipo do veículo: ");
+  let modelo = readline.question("Modelo do veículo: ");
+  let ano = readline.questionInt("Ano do veículo: ");
+  let cores = readline.question("Cores disponíveis: ");
+  let preco = readline.questionFloat("Preço do veículo: ");
+  
+  const novoVeiculo = new Veiculo(tipo, modelo, ano, cores, preco);
+  veiculos.push(novoVeiculo);
+
+  console.log(`Veículo "${modelo}" cadastrado com sucesso!`);
 }
-
 while (loop) {
   clear();
-  console.log("=== CADASTRO DE VEICULOS ===");
+  console.log("=== CADASTRO DE VEÍCULOS ===");
   console.log("========== MENU ==========");
   console.log("0 - Sair do sistema");
-  console.log("1 - Lista de todos os veiculos");
-  console.log("2 - Cadastrar um novo veiculo");
-   console.log("3 - Buscar veiculo por modelo");
-  console.log("4 - Alterar um veiculo");
-  console.log("5 - Remover um veiculo");
-  console.log("==========================");
-  let opcao = readline.questionInt("Escolha uma opcao: ");
+  console.log("1 - Lista de todos os veículos");
+  console.log("2 - Cadastrar um novo veículo");
+  console.log("3 - Buscar veículo por tipo, modelo e ano");
+  consolconsole.log("4 - Alterar um veículo");
+  console.log("5 - Remover um veículo");e.log("==========================");
+  let opcao = readline.questionInt("Escolha uma opção: ");
 
   switch (opcao) {
     case 1:
@@ -105,12 +118,16 @@ while (loop) {
       cadastrarNovoVeiculo();
       readline.keyInPause();
       break;
+    case 3:
+      buscarVeiculoPorTipoModeloAno();
+      readline.keyInPause();
+      break;
     case 0:
       console.log("Saindo do sistema...");
       loop = false;
       break;
     default:
-      console.log("Opção invalida!");
+      console.log("Opção inválida!");
       break;
   }
 }
