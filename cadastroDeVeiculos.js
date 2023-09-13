@@ -1,5 +1,5 @@
-const readline = require("readline-sync");
-const clear = require("clear");
+const readline = require('readline-sync');
+const clear = require('clear');
 
 let gerador_veiculo = 2;
 
@@ -7,6 +7,7 @@ const veiculo1 = {
   Tipo: "Carro",
   Modelo: "citroen c4",
   Cor: ["Prata", "Vermelho", "Preto"],
+  Ano: 2020,  
   preco: 35000,
 };
 
@@ -14,6 +15,7 @@ const veiculo2 = {
   Tipo: "Moto",
   Modelo: "Yamaha Fluo",
   Cor: ["Branco", "Vermelho", "Azul Escuro"],
+  Ano: 2022, 
   preco: 25000,
 };
 
@@ -27,7 +29,7 @@ function listarVeiculos() {
     console.log(`Tipo: ${veiculo.Tipo}`);
     console.log(`Modelo: ${veiculo.Modelo}`);
     console.log(`Cores: ${veiculo.Cor.join(", ")}`);
-    console.log(`Preço: R$ ${veiculo.preco.toFixed(2)}`);
+    console.log(`Preço: R$ ${veiculo.preco.toLocaleString('pt-br', {minimumFractionDigits: 2})}`);
     console.log("------------------------");
   }
 }
@@ -79,7 +81,7 @@ function exibirVeiculo(veiculo) {
   console.log(`Tipo: ${veiculo.Tipo}`);
   console.log(`Modelo: ${veiculo.Modelo}`);
   console.log(`Cores: ${veiculo.Cor.join(", ")}`);
-  console.log(`Preço: R$ ${veiculo.preco.toFixed(2)}`);
+  console.log(`Preço: R$ ${veiculo.preco.toLocaleString('pt-br', {minimumFractionDigits: 2})}`);
   console.log("------------------------");
 }
 
