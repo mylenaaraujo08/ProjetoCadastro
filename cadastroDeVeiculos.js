@@ -7,7 +7,7 @@ const veiculo1 = {
   Tipo: "Carro",
   Modelo: "citroen c4",
   Cor: ["Prata", "Vermelho", "Preto"],
-  Ano: 2020,  
+  Ano: 2019,  
   preco: 35000,
 };
 
@@ -15,7 +15,7 @@ const veiculo2 = {
   Tipo: "Moto",
   Modelo: "Yamaha Fluo",
   Cor: ["Branco", "Vermelho", "Azul Escuro"],
-  Ano: 2022, 
+  Ano: 2021, 
   preco: 25000,
 };
 
