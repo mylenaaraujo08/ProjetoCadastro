@@ -1,6 +1,6 @@
 const readline = require('readline-sync');
 
-class Veiculo {
+class veiculo {
   constructor(tipo, modelo, ano, cores, preco) {
     this.tipo = tipo;
     this.modelo = modelo;
@@ -45,19 +45,25 @@ class Veiculo {
     console.log(`Tipo: ${this.tipo}`);
     console.log(`Modelo: ${this.modelo}`);
     console.log(`Ano: ${this.ano}`);
-    console.log(`Cores: ${this.cores.join(", ")}`);
+    console.log(`Cores: ${this.cores}`);
     console.log(`Preço: R$ ${this.preco.toLocaleString('pt-br', { minimumFractionDigits: 2 })} `);
     console.log("------------------------");
   }
 }
 
-const veiculo1 = new Veiculo("Carro", "citroen c4", 2020, ["Prata", "Vermelho", "Preto"], 35000);
-const veiculo2 = new Veiculo("Moto", "Yamaha Fluo", 2022, ["Branco", "Vermelho", "Azul Escuro"], 25000);
+const veiculo1 = new veiculo("Carro", "citroen c4", 2020, "Prata", 35000);
+const veiculo2 = new veiculo("Carro", "fusca", 1889, "Preto", 85000);
+const veiculo3 = new veiculo("Carro", "ferrari", 2023, "Vermelho", 35000000);
 
-const veiculos = [veiculo1, veiculo2];
+const veiculo4 = new veiculo("Moto", "Yamaha Fluo", 2022, "Branco", 25000);
+const veiculo5 = new veiculo("Moto", "Pcx", 2021, "Preta", 45000);
+const veiculo6 = new veiculo("Moto", "Fazer", 2019, "Azul", 23000);
+
+
+const veiculos = [veiculo1, veiculo2, veiculo3, veiculo4, veiculo5, veiculo6];
 let loop = true;
 
-function listarVeiculos() {
+function listarveiculos() {
   console.log("Listando todos os veículos");
   console.log("------------------------");
   for (const veiculo of veiculos) {
@@ -65,7 +71,7 @@ function listarVeiculos() {
   }
 }
 
-function buscarVeiculoPorTipoModeloAno() {
+function buscarveiculoPorTipoModeloAno() {
   let tipoBusca = readline.question("Qual o tipo do veículo que deseja buscar: ");
   let modeloBusca = readline.question("Qual o modelo do veículo que deseja buscar: ");
   let anoBusca = readline.questionInt("Qual o ano do veículo que deseja buscar: ");
@@ -87,7 +93,7 @@ function buscarVeiculoPorTipoModeloAno() {
   }
 }
 
-function cadastrarNovoVeiculo() {
+function cadastrarNovoveiculo() {
   console.log("Cadastrar um novo veículo");
   console.log("------------------------");
 
@@ -97,14 +103,54 @@ function cadastrarNovoVeiculo() {
   let cores = readline.question("Cores disponíveis: ");
   let preco = parseFloat(readline.question("Preço do veículo: "));
  
-  const novoVeiculo = new Veiculo(tipo, modelo, ano, cores.split(",").map(c => c.trim()), preco);
-  veiculos.push(novoVeiculo);
+  const novoveiculo = new veiculo(tipo, modelo, ano, cores.split(",").map(c => c.trim()), preco);
+  veiculos.push(novoveiculo);
 
   console.log(`Veículo "${modelo}" cadastrado com sucesso!`);
 }
 
+function alteraveiculo() {
+  console.log("Alterar um novo veículo");
+  console.log("------------------------");
+
+  let modeloAltera = readline.question("Qual tipo do veículo deseja alterar: ");
+  let veiculoEncontrado = veiculos.filter(veiculo => veiculo.tipo.toLowerCase() === modeloAltera.toLowerCase());
+
+  if(veiculoEncontrado.length > 0){
+    console.log("veículo encontrado.");
+     veiculoEncontrado[0].modelo = readline.question("Novo Modelo do veículo: ");
+    veiculoEncontrado[0].ano = readline.questionInt("Novo Ano do veículo: ");
+    veiculoEncontrado[0].cores = readline.question("Novas Cores disponíveis: ");
+    veiculoEncontrado[0].preco = parseFloat(readline.question("Novo Preço do veículo: ")); 
+    console.log(`veículo ${modeloAltera} alterado com sucesso!`);
+
+     listarveiculos();
+  } else {
+    console.log(`Veículo ${modeloAltera} não encontrado.`);
+  }
+}
+
+function removerveiculo() {
+  console.log("Remover um veículo");
+  console.log("------------------------");
+
+ let modeloRemove = readline.question("Qual tipo do veículo deseja remover: ");
+  let indexRemover = veiculos.findIndex(veiculo => veiculo.tipo.toLowerCase() === modeloRemove.toLowerCase());
+
+  if(indexRemover!==-1){
+    const modeloRemovido =
+      veiculos[indexRemover].modelo;
+    veiculos.splice(indexRemover,1);
+    console.log(`veiculo ${modeloRemovido} removido com sucesso!.`);
+    listarveiculos();
+  } else{
+    console.log(`nenhum veículo encontrado "${modeloRemovido}"`);
+   }
+  }
+
+  
 while (loop) {
-  console.clear(); // Limpa o console
+  console.clear();
   console.log("=== CADASTRO DE VEÍCULOS ===");
   console.log("========== MENU ==========");
   console.log("0 - Sair do sistema");
@@ -118,15 +164,23 @@ while (loop) {
 
   switch (opcao) {
     case 1:
-      listarVeiculos();
+      listarveiculos();
       readline.keyInPause();
       break;
     case 2:
-      cadastrarNovoVeiculo();
+      cadastrarNovoveiculo();
       readline.keyInPause();
       break;
     case 3:
-      buscarVeiculoPorTipoModeloAno();
+      buscarveiculoPorTipoModeloAno();
+      readline.keyInPause();
+      break;
+    case 4:
+      alteraveiculo();
+      readline.keyInPause();
+      break;
+    case 5:
+      removerveiculo();
       readline.keyInPause();
       break;
     case 0:
@@ -138,4 +192,3 @@ while (loop) {
       break;
   }
 }
-
