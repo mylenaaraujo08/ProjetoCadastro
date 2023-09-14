@@ -47,7 +47,7 @@ class Veiculo {
     console.log(`Modelo: ${this.modelo}`);
     console.log(`Ano: ${this.ano}`);
     console.log(`Cores: ${this.cores.join(", ")}`);
-    console.log(`Preço: R$ ${this.preco.toFixed(2)}`);
+    console.log(`Preço: R$ ${this.preco.toLocaleString (`pt-br` , { mínimoFractionDigits : 2 })} `);
     console.log("------------------------");
   }
 }
