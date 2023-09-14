@@ -1,5 +1,4 @@
-const readline = requer(`readline-sync`);
-const claro = requer(`claro`);
+const readline = require('readline-sync');
 
 class Veiculo {
   constructor(tipo, modelo, ano, cores, preco) {
@@ -47,7 +46,7 @@ class Veiculo {
     console.log(`Modelo: ${this.modelo}`);
     console.log(`Ano: ${this.ano}`);
     console.log(`Cores: ${this.cores.join(", ")}`);
-    console.log(`Preço: R$ ${this.preco.toLocaleString (`pt-br` , { mínimoFractionDigits : 2 })} `);
+    console.log(`Preço: R$ ${this.preco.toLocaleString('pt-br', { minimumFractionDigits: 2 })} `);
     console.log("------------------------");
   }
 }
@@ -96,16 +95,16 @@ function cadastrarNovoVeiculo() {
   let modelo = readline.question("Modelo do veículo: ");
   let ano = readline.questionInt("Ano do veículo: ");
   let cores = readline.question("Cores disponíveis: ");
-  let preco = readline.questionFloat("Preço do veículo: ");
+  let preco = parseFloat(readline.question("Preço do veículo: "));
  
-  const novoVeiculo = new Veiculo(tipo, modelo, ano, cores, preco);
+  const novoVeiculo = new Veiculo(tipo, modelo, ano, cores.split(",").map(c => c.trim()), preco);
   veiculos.push(novoVeiculo);
 
   console.log(`Veículo "${modelo}" cadastrado com sucesso!`);
 }
 
 while (loop) {
-  clear();
+  console.clear(); // Limpa o console
   console.log("=== CADASTRO DE VEÍCULOS ===");
   console.log("========== MENU ==========");
   console.log("0 - Sair do sistema");
@@ -139,3 +138,4 @@ while (loop) {
       break;
   }
 }
+
