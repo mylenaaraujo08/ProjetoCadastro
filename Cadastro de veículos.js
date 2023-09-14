@@ -1,5 +1,5 @@
-const readline = require("readline-sync");
-const clear = require("clear");
+const readline = requer(`readline-sync`);
+const claro = requer(`clear`);
 
 class Veiculo {
   constructor(tipo, modelo, ano, cores, preco) {
@@ -52,8 +52,8 @@ class Veiculo {
   }
 }
 
-const veiculo1 = new Veiculo("Carro", "citroen c4", 2021, ["Prata", "Vermelho", "Preto"], 35000);
-const veiculo2 = new Veiculo("Moto", "Yamaha Fluo", 2019, ["Branco", "Vermelho", "Azul Escuro"], 25000);
+const veiculo1 = new Veiculo("Carro", "citroen c4", 2020, ["Prata", "Vermelho", "Preto"], 35000);
+const veiculo2 = new Veiculo("Moto", "Yamaha Fluo", 2022, ["Branco", "Vermelho", "Azul Escuro"], 25000);
 
 const veiculos = [veiculo1, veiculo2];
 let loop = true;
