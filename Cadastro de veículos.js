@@ -9,6 +9,7 @@ class Veiculo {
     this.cores = cores;
     this.preco = preco;
   }
+  
   get tipo() {
     return this._tipo;
   }
@@ -39,6 +40,7 @@ class Veiculo {
   set preco(novoPreco) {
     this._preco = novoPreco;
   }
+  
   exibir() {
     console.log("------------------------");
     console.log(`Tipo: ${this.tipo}`);
@@ -49,6 +51,7 @@ class Veiculo {
     console.log("------------------------");
   }
 }
+
 const veiculo1 = new Veiculo("Carro", "citroen c4", 2021, ["Prata", "Vermelho", "Preto"], 35000);
 const veiculo2 = new Veiculo("Moto", "Yamaha Fluo", 2019, ["Branco", "Vermelho", "Azul Escuro"], 25000);
 
@@ -62,6 +65,7 @@ function listarVeiculos() {
     veiculo.exibir();
   }
 }
+
 function buscarVeiculoPorTipoModeloAno() {
   let tipoBusca = readline.question("Qual o tipo do veículo que deseja buscar: ");
   let modeloBusca = readline.question("Qual o modelo do veículo que deseja buscar: ");
@@ -72,6 +76,7 @@ function buscarVeiculoPorTipoModeloAno() {
     veiculo.modelo.toLowerCase() === modeloBusca.toLowerCase() &&
     veiculo.ano === anoBusca
   );
+  
   if (encontrados.length > 0) {
     console.log("Resultado da busca");
     console.log("------------------------");
@@ -82,6 +87,7 @@ function buscarVeiculoPorTipoModeloAno() {
     console.log(`Nenhum veículo encontrado com o tipo "${tipoBusca}", modelo "${modeloBusca}" e ano "${anoBusca}"`);
   }
 }
+
 function cadastrarNovoVeiculo() {
   console.log("Cadastrar um novo veículo");
   console.log("------------------------");
@@ -91,12 +97,13 @@ function cadastrarNovoVeiculo() {
   let ano = readline.questionInt("Ano do veículo: ");
   let cores = readline.question("Cores disponíveis: ");
   let preco = readline.questionFloat("Preço do veículo: ");
-  
+ 
   const novoVeiculo = new Veiculo(tipo, modelo, ano, cores, preco);
   veiculos.push(novoVeiculo);
 
   console.log(`Veículo "${modelo}" cadastrado com sucesso!`);
 }
+
 while (loop) {
   clear();
   console.log("=== CADASTRO DE VEÍCULOS ===");
@@ -105,8 +112,9 @@ while (loop) {
   console.log("1 - Lista de todos os veículos");
   console.log("2 - Cadastrar um novo veículo");
   console.log("3 - Buscar veículo por tipo, modelo e ano");
-  consolconsole.log("4 - Alterar um veículo");
-  console.log("5 - Remover um veículo");e.log("==========================");
+  console.log("4 - Alterar um veículo");
+  console.log("5 - Remover um veículo");
+  console.log("==========================");
   let opcao = readline.questionInt("Escolha uma opção: ");
 
   switch (opcao) {
