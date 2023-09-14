@@ -1,5 +1,5 @@
 const readline = requer(`readline-sync`);
-const claro = requer(`clear`);
+const claro = requer(`claro`);
 
 class Veiculo {
   constructor(tipo, modelo, ano, cores, preco) {
