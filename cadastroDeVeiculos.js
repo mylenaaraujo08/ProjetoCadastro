@@ -59,7 +59,6 @@ const veiculo4 = new veiculo("Moto", "Yamaha Fluo", 2022, "Branco", 25000);
 const veiculo5 = new veiculo("Moto", "Pcx", 2021, "Preta", 45000);
 const veiculo6 = new veiculo("Moto", "Fazer", 2019, "Azul", 23000);
 
-
 const veiculos = [veiculo1, veiculo2, veiculo3, veiculo4, veiculo5, veiculo6];
 let loop = true;
 
@@ -130,25 +129,33 @@ function alteraveiculo() {
   }
 }
 
+function removerVeiculoPorTipoModelo(tipo, modelo) {
+  let indexRemover = veiculos.findIndex(veiculo => 
+    veiculo.tipo.toLowerCase() === tipo.toLowerCase() && 
+    veiculo.modelo.toLowerCase() === modelo.toLowerCase()
+  );
+  if (indexRemover !== -1) {
+    const veiculoRemovido = veiculos.splice(indexRemover, 1);
+    console.log(`Veículo ${veiculoRemovido[0].modelo} removido com sucesso!.`);
+  } else {
+    console.log(`Nenhum veículo encontrado com o tipo "${tipo}" e modelo "${modelo}"`);
+  }
+}
+
 function removerveiculo() {
-  console.log("Remover um veículo");
+  console.log("Remover um veículo por tipo e modelo");
   console.log("------------------------");
 
- let modeloRemove = readline.question("Qual tipo do veículo deseja remover: ");
-  let indexRemover = veiculos.findIndex(veiculo => veiculo.tipo.toLowerCase() === modeloRemove.toLowerCase());
+  let tipoRemover = readline.question("Qual o tipo do veículo que deseja remover: ");
+  let modeloRemover = readline.question("Qual o modelo do veículo que deseja remover: ");
+  let veiculoRemovido = removerVeiculoPorTipoModelo(tipoRemover, modeloRemover);
 
-  if(indexRemover!==-1){
-    const modeloRemovido =
-      veiculos[indexRemover].modelo;
-    veiculos.splice(indexRemover,1);
-    console.log(`veiculo ${modeloRemovido} removido com sucesso!.`);
+  if (veiculoRemovido) {
     listarveiculos();
-  } else{
-    console.log(`nenhum veículo encontrado "${modeloRemovido}"`);
-   }
   }
+  readline.keyInPause();
+}
 
-  
 while (loop) {
   console.clear();
   console.log("=== CADASTRO DE VEÍCULOS ===");
