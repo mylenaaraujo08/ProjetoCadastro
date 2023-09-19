@@ -35,7 +35,8 @@ let veiculos = [
 // Função que listam veículos de um tipo específico
 function listarVeiculos(tipoModificado, modificado) {
   console.log(`Listando veículos ${tipoModificado ? `do tipo "${tipoModificado}"` : ''}`);
-  console.log("=============================");
+  console.log("-------------------------------------------------\n");
+
   const veiculosFiltrados = tipoModificado ? veiculos.filter(v => v.tipo.toLowerCase() === tipoModificado.toLowerCase()) : veiculos;
 
   if (veiculosFiltrados.length > 0) {
@@ -202,7 +203,6 @@ function removerVeiculo(tipoRemover) {
           break;
         }
 
-        //keyInYNStrict é usada para obter uma entrada do usuário e garantir que a entrada seja restrita a "Sim" (Yes) ou "Não" (No)
         let continuarRemovendo = readline.keyInYNStrict("Deseja continuar a remover outro veículo? (Sim/Não): \n");
         if (!continuarRemovendo) {
           break;
@@ -241,17 +241,13 @@ while (loop) {
   console.log("3 - Buscar veículo por tipo, modelo e ano");
   console.log("4 - Alterar um veículo");
   console.log("5 - Remover um veículo");
-
-  console.log("================ MENU ADICIONAL ==============");
-  console.log("6 - Listagem dos veículos cadastrados");
-  console.log("7 - Listagem dos veículos por tipo modificado");
   console.log("0 - Sair do Sistema");
   console.log("==============================================");
   const opcao = readline.questionInt("Escolha uma opção: ");
   console.log("\n");
 
   switch (opcao) {
-
+    
     case 1:
       console.clear();
       let tipoEscolhido;
@@ -294,35 +290,37 @@ while (loop) {
       }
       break;
 
-    case 3:
-      console.clear();
-      console.log("Buscar veículo por tipo, modelo e ano");
-      console.log("-------------------------------------");
+  case 3:
+  console.clear();
+  console.log("Buscar veículo por tipo, modelo e ano");
+  console.log("-------------------------------------");
+  
+  let tipoBusca;
+  do {
+    imprimirOpcoesEscolha();
+    tipoBusca = readline.questionInt("Escolha o tipo de veículo que deseja buscar: ");
+    if (tipoBusca === 1 || tipoBusca === 2) {
+      const tipo = tipoBusca === 1 ? 'Carro' : 'Moto';
       let modeloBusca = readline.question("Digite o modelo do veículo: ");
       let anoBusca = readline.questionInt("Digite o ano do veículo: ");
-      let tipoBusca;
-      do {
-        imprimirOpcoesEscolha();
-        tipoBusca = readline.questionInt("Escolha o tipo de veículo que deseja buscar: ");
-        if (tipoBusca === 1 || tipoBusca === 2) {
-          const tipo = tipoBusca === 1 ? 'Carro' : 'Moto';
-          const veiculoEncontrado = veiculos.find(v => v.tipo.toLowerCase() === tipo.toLowerCase() && v.modelo.toLowerCase() === modeloBusca.toLowerCase() && v.ano === anoBusca);
-          if (veiculoEncontrado) {
-            console.log("\nVeículo encontrado:");
-            veiculoEncontrado.exibir();
-          } else {
-            console.log(`\n*** Nenhum veículo do tipo "${tipo}" com o modelo "${modeloBusca}" e ano "${anoBusca}" encontrado. ***\n`);
-          }
-        } else {
-          console.log("\n*** Opção inválida. Por favor, escolha 1 para Carro ou 2 para Moto. ***\n");
-        }
-      } while (tipoBusca !== 1 && tipoBusca !== 2);
-      if (perguntarSeDesejaContinuar()) {
-        continue;
+      const veiculoEncontrado = veiculos.find(v => v.tipo.toLowerCase() === tipo.toLowerCase() && v.modelo.toLowerCase() === modeloBusca.toLowerCase() && v.ano === anoBusca);
+      if (veiculoEncontrado) {
+        console.log("\nVeículo encontrado:");
+        veiculoEncontrado.exibir();
       } else {
-        loop = false;
+        console.log(`\n*** Nenhum veículo do tipo "${tipo}" com o modelo "${modeloBusca}" e ano "${anoBusca}" encontrado. ***\n`);
       }
-      break;
+    } else {
+      console.log("\n*** Opção inválida. Por favor, escolha 1 para Carro ou 2 para Moto. ***\n");
+    }
+  } while (tipoBusca !== 1 && tipoBusca !== 2);
+
+  if (perguntarSeDesejaContinuar()) {
+    continue;
+  } else {
+    loop = false;
+  }
+  break;
 
     case 4:
       alterarVeiculo();
@@ -354,50 +352,15 @@ while (loop) {
         loop = false;
       }
       break;
-
-    case 6:
-      console.clear();
-      console.log("Listagem de todos os veículos");
-      console.log("-----------------------------");
-      listarVeiculos(null);
-      if (perguntarSeDesejaContinuar()) {
-        continue;
-      } else {
-        loop = false;
-      }
-      break;
-
-    case 7:
-      console.clear();
-      let tipoModificado;
-      do {
-        imprimirOpcoesEscolha();
-        tipoModificado = readline.questionInt("Escolha o tipo de veículo que deseja listar: ");
-        if (tipoModificado === 1 || tipoModificado === 2) {
-          const tipo = tipoModificado === 1 ? 'Carro' : 'Moto';
-          listarVeiculos(tipo, true);
-        } else {
-          console.log("\n*** Opção inválida. Por favor, escolha 1 para Carro ou 2 para Moto. ***\n");
-        }
-      } while (tipoModificado !== 1 && tipoModificado !== 2);
-      if (perguntarSeDesejaContinuar()) {
-        continue;
-      } else {
-        loop = false;
-      }
-      break;
-
+      
     case 0:
       loop = false;
       break;
-
     default:
       console.clear();
       console.log("\n*** Opção inválida. Por favor, escolha uma opção válida. ***\n");
       break;
-
   }
-
 }
 
 //Para quando sair do Sistema
