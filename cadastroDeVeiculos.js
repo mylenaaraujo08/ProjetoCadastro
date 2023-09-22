@@ -362,8 +362,6 @@ while (loop) {
       break;
   }
 }
-
-
 //Para quando sair do Sistema
 console.log("\n===========================================================\n");
 console.log("Obrigado por acessar nosso sistema! Atendimento encerrado...");
